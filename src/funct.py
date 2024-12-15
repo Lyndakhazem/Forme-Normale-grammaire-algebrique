@@ -1,4 +1,4 @@
-from src.structure import Grammaire
+from structure import Grammaire
 
 def start(G):
     '''
@@ -164,7 +164,7 @@ def lire(input_f):
 
 
 # test fonctionnalites 
-file="test.general"
+file="src/test.general"
 axiome,dict_regles=lire(file)
 g=Grammaire(axiome,dict_regles)
 print("------avant operations ------------------")
