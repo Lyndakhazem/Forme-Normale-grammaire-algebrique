@@ -104,6 +104,35 @@ def Del(G):
         if productions==[]:
             del G.regles[mg]
             
+def unit(G):
+    '''
+    supprime les regles unite X->Y , X et Y sont des non terminaux
+    Modifie la grammaire passée en parametre .
+    Arguments : instance de la Structure Grammaire'''
+
+    modification = True
+    while modification:
+        modification = False
+        #Récupérer les règles de la grammaire
+        regles = G.regles
+        # Trouver toutes les règles d'unité et les supprimer
+        for mg, productions in list(G.regles.items()):
+            # Parcourir les productions pour chaque non-terminal
+            for prod in list(productions):
+                # Extraire les symboles de la production
+                symboles = G.extraire_symboles_de_production(prod)
+
+                # Vérifier si la production est une règle d'unité
+                if len(symboles) ==1 and symboles[0] in G.non_terminaux:
+                    Y = symboles[0]
+                    # Ajouter les règles de Y à X (mg)
+                    if Y in regles:
+                        for nv_prod in regles[Y]:
+                            if nv_prod not in regles[mg]:
+                                G.ajout_regles(mg,[nv_prod])
+                                modification = True
+                    # Supprimer la règle unité X -> Y  
+                    regles[mg].remove(prod)        
 
 
 def dic_regles(input_l):
@@ -170,6 +199,6 @@ g=Grammaire(axiome,dict_regles)
 print("------avant operations ------------------")
 print(g)
 # operations
-start(g);term(g);bin(g);Del(g)
+start(g);term(g);Del(g);unit(g)
 print("------apres operations ------------------")
 print(g)
