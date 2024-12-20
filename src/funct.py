@@ -134,6 +134,100 @@ def unit(G):
                     # Supprimer la règle unité X -> Y  
                     regles[mg].remove(prod)        
 
+def sup_recursion_gauche(G):
+    '''
+    supprime la recursion gauche 
+    exemple : A0 -> A0a | b    =>  A0 -> bA1 | b
+                                   A1 -> aA1|a
+    Modifie la grammaire passée en paramètre.
+    Arguments : instance de la Structure Grammaire
+    '''
+    for mg, productions in list(G.regles.items()):
+        nv_non_term = G.variable_dispo()
+        for prod in list(productions):
+            symboles = G.extraire_symboles_de_production(prod)
+            if symboles[0] == mg:
+                if nv_non_term not in G.non_terminaux:
+                    G.non_terminaux.add(nv_non_term)
+                reste = "".join(symboles[1:])
+                nv_regle = [reste,reste+nv_non_term]
+                G.ajout_regles(nv_non_term, nv_regle)
+                G.regles[mg].remove(prod)
+            elif nv_non_term in G.non_terminaux:
+                G.ajout_regles(mg,[prod+nv_non_term])
+
+
+
+def var_head(G):
+    '''
+    Supprime les non-terminaux en tête des règles
+    compris la suppression de la recursion gauche
+    Exemple : A0 -> B0a | b
+              B0 ->c | d  résultat A0 -> ca | da |b
+                                   B0 -> c| d
+    Modifie la grammaire passée en paramètre.
+    Arguments : instance de la Structure Grammaire
+    '''
+    sup_recursion_gauche(G)
+    modification = True
+    while modification:
+        modification = False
+        for mg, productions in list(G.regles.items()):
+            for prod in list(productions):
+                symboles = G.extraire_symboles_de_production(prod)
+                if symboles[0] in G.non_terminaux:
+                    t = symboles[0]
+                    nv_productions = []
+                    reste = "".join(symboles[1:])
+                    for p in G.regles[t]:
+                        nv_productions.append(p+reste)
+                    G.regles[mg].remove(prod)
+                    G.ajout_regles(mg,nv_productions)
+                    modification = True
+        
+
+        
+
+def term_head(G):
+    '''
+    Supprime les symboles terminaux qui ne sont pas en tête des règles.
+    Cette fonction transforme chaque terminal qui n'est pas en tête d'une règle en un nouveau non-terminal,
+    et les remplace dans les règles correspondantes.
+    Modifie la grammaire passée en paramètre.
+    Arguments : instance de la Structure Grammaire
+    '''
+    # Associe chaque terminal à un nouveau non-terminal
+    terminal_to_non_terminal = {}
+    for mg, productions in list(G.regles.items()):       
+        for prod in list(productions):            
+            symboles = G.extraire_symboles_de_production(prod) 
+            
+            # Liste pour stocker la production modifiée
+            nouvelle_prod = symboles[0]
+
+            # Parcours des symboles dans la production
+            for s in symboles[1:]:
+                if s in G.terminaux and s.islower():  # Si c'est un terminal, on le remplace
+
+                    # Vérifie si un non-terminal existe déjà pour ce terminal
+                    if s not in terminal_to_non_terminal:
+                        nv_non_term = G.variable_dispo()  # Nouveau non-terminal pour le terminal
+                        G.non_terminaux.add(nv_non_term) # ajouter ce nv non terminaux aux non_terminaux de la grammaire
+                        terminal_to_non_terminal[s] = nv_non_term  # Associe le terminal au nouveau non-terminal
+                        G.ajout_regles(nv_non_term, [s])
+
+                    # Utilise le non-terminal existant
+                    nouvelle_prod +=terminal_to_non_terminal[s]
+                else:
+                    nouvelle_prod+=s  # Si ce n'est pas un terminal, on garde le symbole tel quel
+
+            # Une fois qu'on a modifié les symboles, on met à jour les règles
+            G.regles[mg].remove(prod)
+            G.ajout_regles(mg, [nouvelle_prod])
+
+
+
+
 
 def dic_regles(input_l):
     '''
@@ -199,6 +293,7 @@ g=Grammaire(axiome,dict_regles)
 print("------avant operations ------------------")
 print(g)
 # operations
-start(g);term(g);Del(g);unit(g)
+start(g);Del(g);unit(g)
+var_head(g);term_head(g)
 print("------apres operations ------------------")
 print(g)
