@@ -88,7 +88,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
     python generer.py 4 test.chomsky > test_4_chomsky.res
     python generer.py 4 test.greibach > test_4_greibach.res
 ```
-### 5. **Démo avec Makefile**
+### 6. **Démo avec Makefile**
 ```plaintext
     cd src
 ```
