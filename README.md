@@ -104,6 +104,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
 ```plaintext 
     make clean
 ```
+- Exemple 
 ```plaintext
     cd src
     make test
