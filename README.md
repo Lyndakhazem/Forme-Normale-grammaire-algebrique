@@ -98,7 +98,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
 ```
 - Ou exécuter make nom_fichier qui génére uniquement les résultats pour le fichier nom_fichier.general
 ```plaintext
-    make <nom_fichier>
+    make nom_fichier
 ```
 - Exécuter make clean pour supprimer tous les fichiers générés
 ```plaintext 
