@@ -65,8 +65,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
     T2 : E
 ```
 
-### 5. **Démo**
-- **En CLI** (exemple avec un fichier test.general):
+### 5. **Démo en CLI avec un exemple sur un fichier test.general**
 ```plaintext
     cd src
 ```
@@ -88,7 +87,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
     python generer.py 4 test.chomsky > test_4_chomsky.res
     python generer.py 4 test.greibach > test_4_greibach.res
 ```
-- **En Makefile** (exemple avec un fichier test.general):
+### 5. **Démo avec Makefile**
 ```plaintext
     cd src
 ```
