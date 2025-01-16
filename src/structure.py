@@ -15,6 +15,14 @@ class Grammaire:
         self.regles =regles
         self.terminaux,self.non_terminaux=self.extraire_symboles()
 
+    def copy(self):
+        '''
+        Crée une nouvelle (instance) copie de la grammaire
+        '''
+        axiome = self.axiome
+        regles = {mg:list(prod) for mg,prod in self.regles.items()}
+        return Grammaire(axiome,regles)
+
     
     def extraire_symboles(self):
         ''' Extrait depuis les regles de production l'ensemble des symboles 
@@ -87,6 +95,23 @@ class Grammaire:
         ''' Retourne la prochaine variable (non terminale) disponible '''
         
         return sorted(self.tous_les_non_terminaux - self.non_terminaux)[0]
+    
+    def ecrire(self,output):
+        '''
+        permet d'écrire l'instance grammaire (self) sur un fichier en sortie
+        Arguments: 
+        chemin de fichier de sortie 
+        '''
+        try:
+            with open (output,"w") as fichier:
+                for prod in self.regles[self.axiome]:
+                    fichier.write(f'{self.axiome} : {prod}\n')
+                for mg,prod in self.regles.items():
+                    if mg!=self.axiome:
+                        for p in prod:
+                            fichier.write(f'{mg} : {p}\n')
+                        
+        except Exception as e: print("Erreur lors de l'ecriture dans le fichier")
     
 
     def __str__(self):
