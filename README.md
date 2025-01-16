@@ -66,15 +66,20 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
 ```
 
 ### 5. **Démo**
-- En CLI(exemple avec un fichier test.general):
+- **En CLI** (exemple avec un fichier test.general):
 ```plaintext
     cd src
-    - Générer deux fichiers <NomDeFichier>.chomsky et <NomDeFichier>.greibach
+```
+- Générer deux fichiers <NomDeFichier>.chomsky et <NomDeFichier>.greibach
+```plaintext
     python grammaire.py <NomDeFichier>.general
-
-    - Générer le fichier <NomDeFichier>_N_chomsky.res
+```
+- Générer le fichier <NomDeFichier>_N_chomsky.res
+```plaintext
     python generer.py <N = LongueurMaxMot> <NomDeFichier>.chomsky > test_N_chomsky.res
-    - Générer le fichier <NomDeFichier>_N_greibach.res
+```
+- Générer le fichier <NomDeFichier>_N_greibach.res
+```plaintext
     python generer.py <N = LongueurMaxMot> <NomDeFichier>.greibach > test_N_greibach.res
 ```
 ```plaintext
@@ -83,15 +88,20 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
     python generer.py 4 test.chomsky > test_4_chomsky.res
     python generer.py 4 test.greibach > test_4_greibach.res
 ```
-- En Makefile (exemple avec un fichier test.general):
+- **En Makefile** (exemple avec un fichier test.general):
 ```plaintext
     cd src
-    - Exécuter make qui génére les résultats pour tous les fichiers
+```
+- Exécuter make qui génére les résultats pour tous les fichiers
+```plaintext
     make
-    - Ou exécuter make <nom_fichier> qui génére uniquement les résultats pour le fichier <nom_fichier>.general
+```
+- Ou exécuter make <nom_fichier> qui génére uniquement les résultats pour le fichier <nom_fichier>.general
+```plaintext
     make <nom_fichier>
-
-    - Exécuter make clean pour supprimer tous les fichiers générés 
+```
+- Exécuter make clean pour supprimer tous les fichiers générés
+```plaintext 
     make clean
 ```
 ```plaintext
