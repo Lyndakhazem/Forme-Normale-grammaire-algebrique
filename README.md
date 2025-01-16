@@ -69,18 +69,19 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
 ```plaintext
     cd src
 ```
-- Générer deux fichiers <NomDeFichier>.chomsky et <NomDeFichier>.greibach
+- Générer deux fichiers nom_fichier.chomsky et nom_fichier.greibach
 ```plaintext
-    python grammaire.py <NomDeFichier>.general
+    python grammaire.py nom_fichier.general
 ```
-- Générer le fichier <NomDeFichier>_N_chomsky.res
+- Générer le fichier nom_fichier_N_chomsky.res
 ```plaintext
-    python generer.py <N = LongueurMaxMot> <NomDeFichier>.chomsky > test_N_chomsky.res
+    python generer.py <N = LongueurMaxMot> nom_fichier.chomsky > test_N_chomsky.res
 ```
-- Générer le fichier <NomDeFichier>_N_greibach.res
+- Générer le fichier nom_fichier_N_greibach.res
 ```plaintext
-    python generer.py <N = LongueurMaxMot> <NomDeFichier>.greibach > test_N_greibach.res
+    python generer.py <N = LongueurMaxMot> nom_fichier.greibach > test_N_greibach.res
 ```
+- Exemple :
 ```plaintext
     cd src
     python grammaire.py test.general
@@ -95,7 +96,7 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
 ```plaintext
     make
 ```
-- Ou exécuter make <nom_fichier> qui génére uniquement les résultats pour le fichier <nom_fichier>.general
+- Ou exécuter make nom_fichier qui génére uniquement les résultats pour le fichier nom_fichier.general
 ```plaintext
     make <nom_fichier>
 ```
