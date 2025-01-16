@@ -64,6 +64,40 @@ Par exemple : `T8`, `A5`, `R0`. Il y a donc **250 non-terminaux possibles**.
     T2 : a
     T2 : E
 ```
+
+### 5. **Démo**
+- En CLI(exemple avec un fichier test.general):
+```plaintext
+    cd src
+    - Générer deux fichiers <NomDeFichier>.chomsky et <NomDeFichier>.greibach
+    python grammaire.py <NomDeFichier>.general
+
+    - Générer le fichier <NomDeFichier>_N_chomsky.res
+    python generer.py <N = LongueurMaxMot> <NomDeFichier>.chomsky > test_N_chomsky.res
+    - Générer le fichier <NomDeFichier>_N_greibach.res
+    python generer.py <N = LongueurMaxMot> <NomDeFichier>.greibach > test_N_greibach.res
+```
+```plaintext
+    cd src
+    python grammaire.py test.general
+    python generer.py 4 test.chomsky > test_4_chomsky.res
+    python generer.py 4 test.greibach > test_4_greibach.res
+```
+- En Makefile (exemple avec un fichier test.general):
+```plaintext
+    cd src
+    - Exécuter make qui génére les résultats pour tous les fichiers
+    make
+    - Ou exécuter make <nom_fichier> qui génére uniquement les résultats pour le fichier <nom_fichier>.general
+    make <nom_fichier>
+
+    - Exécuter make clean pour supprimer tous les fichiers générés 
+    make clean
+```
+```plaintext
+    cd src
+    make test
+```
 ---
 
 ## Auteurs :
