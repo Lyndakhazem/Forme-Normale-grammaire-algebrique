@@ -113,8 +113,6 @@ def unit(G):
     modification = True
     while modification:
         modification = False
-        #Récupérer les règles de la grammaire
-        regles = G.regles
         # Trouver toutes les règles d'unité et les supprimer
         for mg, productions in list(G.regles.items()):
             # Parcourir les productions pour chaque non-terminal
@@ -125,14 +123,11 @@ def unit(G):
                 # Vérifier si la production est une règle d'unité
                 if len(symboles) ==1 and symboles[0] in G.non_terminaux:
                     Y = symboles[0]
-                    # Ajouter les règles de Y à X (mg)
-                    if Y in regles:
-                        for nv_prod in regles[Y]:
-                            if nv_prod not in regles[mg]:
-                                G.ajout_regles(mg,[nv_prod])
-                                modification = True
                     # Supprimer la règle unité X -> Y  
-                    regles[mg].remove(prod)        
+                    G.regles[mg].remove(prod)
+                    # Ajouter les règles de Y à X (mg)
+                    G.ajout_regles(mg,G.regles[Y])
+                    modification = True        
 
 def sup_recursion_gauche(G):
     '''
@@ -158,7 +153,7 @@ def sup_recursion_gauche(G):
 
 
 
-def var_head(G):
+def del_var_head(G):
     '''
     Supprime les non-terminaux en tête des règles
     compris la suppression de la recursion gauche
@@ -226,9 +221,6 @@ def term_head(G):
             G.ajout_regles(mg, [nouvelle_prod])
 
 
-
-
-
 def dic_regles(input_l):
     '''
     transforme une liste de tuple representant les regles de production
@@ -249,10 +241,6 @@ def lire(input_f):
     Return : l'axiome et dict des regles de productions si pas d'erreur dans le fich source .
     '''
     try:
-        #Verif l'extension de fichier 
-        if not input_f.endswith('.general'):
-            raise ValueError(f"L'extension du fichier '{input_f}' n'est pas valide. Utilisez un fichier avec l'extension '.general'.")
-        
         l=[]
         # Lecture du fichier
         with open(input_f, 'r', encoding='utf-8') as f:
@@ -277,23 +265,9 @@ def lire(input_f):
         regles=dic_regles(l)
         return axiome,regles
         
-    
     except FileNotFoundError:
         print(f"Erreur : Le fichier {input_f} est introuvable.")
         return None
     except ValueError as e:
         print(f"Erreur de format : {e}")
         return None
-
-
-# test fonctionnalites 
-file="src/test.general"
-axiome,dict_regles=lire(file)
-g=Grammaire(axiome,dict_regles)
-print("------avant operations ------------------")
-print(g)
-# operations
-start(g);Del(g);unit(g)
-var_head(g);term_head(g)
-print("------apres operations ------------------")
-print(g)
