@@ -16,8 +16,9 @@ def Greibach(G):
        Arguments:
        G : instance de la grammaire generale
     '''
-    start(G);term(G);Del(G)
-    del_var_head(G);term_head(G)
+    start(G);Del(G);unit(G)
+    del_var_head(G)
+    term_head(G)
 
 
 def main():
